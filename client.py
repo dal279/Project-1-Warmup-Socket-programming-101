@@ -2,6 +2,7 @@ import threading
 import time
 import random
 
+from server import server
 import socket
 
 def client():

@@ -26,6 +26,15 @@ def client():
     # Receive the modified string from the server
     data_from_server = cs.recv(100).decode('utf-8')
     print("[C]: Received from server: {}".format(data_from_server))
+    
+    
+    # Open the input file and send each line to the server
+    with open("in-proj.txt", "r") as infile:
+        for line in infile:
+            # Strip newline characters and send the line
+            line_to_send = line.strip()
+            print("[C]: Sending to server: '{}'".format(line_to_send))
+            cs.send(line_to_send.encode('utf-8'))
 
     # Close the client socket
     cs.close()

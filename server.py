@@ -29,6 +29,23 @@ def server():
 
     # Send the modified string back to the client
     csockid.send(modified_string.encode('utf-8'))
+    
+    # Open output file for writing
+    with open("out-proj.txt", "w") as outfile:
+        while True:
+            # Receive data from the client
+            data_from_client = csockid.recv(200).decode('utf-8')
+
+            # If no more data, break the loop
+            if not data_from_client:
+                break
+            
+            # Reverse the string and swap its case
+            modified_string = data_from_client[::-1].swapcase()
+            print("[S]: Received: '{}' | Modified: '{}'".format(data_from_client, modified_string))
+
+            # Write the modified string to the output file
+            outfile.write(modified_string + "\n")
 
     # Close the client socket and server socket
     csockid.close()

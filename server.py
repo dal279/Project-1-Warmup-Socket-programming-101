@@ -1,7 +1,3 @@
-import threading
-import time
-import random
-
 import socket
 
 def server():
@@ -19,13 +15,17 @@ def server():
     print("[S]: Server host name is {}".format(host))
     localhost_ip = (socket.gethostbyname(host))
     print("[S]: Server IP address is {}".format(localhost_ip))
+    
     csockid, addr = ss.accept()
-    print ("[S]: Got a connection request from a client at {}".format(addr))
+    print("[S]: Got a connection request from a client at {}".format(addr))
 
-    # send a intro message to the client.  
+    # Send a welcome message to the client
     msg = "Welcome to CS 352!"
     csockid.send(msg.encode('utf-8'))
 
-    # Close the server socket
+    # Close the client socket and server socket
+    csockid.close()
     ss.close()
-    exit()
+
+if __name__ == "__main__":
+    server()

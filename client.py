@@ -16,9 +16,16 @@ def client():
     server_binding = (localhost_addr, port)
     cs.connect(server_binding)
 
-    # Receive data from the server
-    data_from_server = cs.recv(100)
-    print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
+    # Input string from user
+    message_to_server = input("Enter a string to send to the server: ")
+    print("[C]: Sending to server: {}".format(message_to_server))
+
+    # Send the string to the server
+    cs.send(message_to_server.encode('utf-8'))
+
+    # Receive the modified string from the server
+    data_from_server = cs.recv(100).decode('utf-8')
+    print("[C]: Received from server: {}".format(data_from_server))
 
     # Close the client socket
     cs.close()

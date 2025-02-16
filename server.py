@@ -19,9 +19,16 @@ def server():
     csockid, addr = ss.accept()
     print("[S]: Got a connection request from a client at {}".format(addr))
 
-    # Send a welcome message to the client
-    msg = "Welcome to CS 352!"
-    csockid.send(msg.encode('utf-8'))
+    # Receive a string from the client
+    data_from_client = csockid.recv(100).decode('utf-8')
+    print("[S]: Received from client: {}".format(data_from_client))
+
+    # Reverse the string and swap its case
+    modified_string = data_from_client[::-1].swapcase()
+    print("[S]: Sending modified string back to client: {}".format(modified_string))
+
+    # Send the modified string back to the client
+    csockid.send(modified_string.encode('utf-8'))
 
     # Close the client socket and server socket
     csockid.close()
